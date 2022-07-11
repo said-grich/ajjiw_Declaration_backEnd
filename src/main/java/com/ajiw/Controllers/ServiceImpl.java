@@ -2,7 +2,8 @@ package com.ajiw.Controllers;
  
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.ajiw.Repositories.DeclarationRepository;
@@ -12,7 +13,7 @@ import com.ajiw.entities.User;
    
 
  
-@Service
+@Component
 public class ServiceImpl implements ServiceU {
 	@Autowired
 	UserRespository ur;
@@ -24,8 +25,12 @@ public class ServiceImpl implements ServiceU {
 	   } 
 	public Declaration saveDec(Declaration dec) { 
 		return dr.save(dec);
-	} 
-	public Declaration getDec(int id) { 
+	}
+
+	@Override
+
+
+	public Declaration getDec(Long id) {
 		return dr.getById(id);
 	}
 	public List<Declaration> getAllDec(){

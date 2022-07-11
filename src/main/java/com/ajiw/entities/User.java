@@ -32,7 +32,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) 
-	private int id_user;
+	private int id;
 	
 	@Column(name = "email")
 	@JsonProperty("email")
