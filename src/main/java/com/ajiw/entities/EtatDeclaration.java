@@ -1,6 +1,7 @@
 package com.ajiw.entities;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -22,8 +24,6 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-
 
 @Entity
 @Table(name = "etatDeclaration")
@@ -36,30 +36,33 @@ public class EtatDeclaration {
 	
 	@Column(name = "dateEtat")
 	@JsonProperty("dateEtat")
-	private Date dateEtat;
+	private Timestamp dateEtat;
 
 		
 	 
 	//=================
 	@ManyToOne
 	@JoinColumn(nullable = false) 
-    @JsonBackReference(value="etatdeclaration-declaration")
+	@JsonIgnore
 	private Declaration declaration;
 	
 	//=================
 	@ManyToOne
 	@JoinColumn(nullable = false) 
-    @JsonBackReference(value="etatdeclaration-etat")
 	private Etat etat;
 	
 	//=================
 	@ManyToOne
-	@JoinColumn(nullable = false) 
-    @JsonBackReference(value="etatdeclaration-user")
+	@JoinColumn(nullable = false)
+	@JsonIgnore
 	private User user;
-	 
-	
-	 
-	
+
+	@Override
+	public String toString() {
+		return "EtatDeclaration{" +
+				"id_etatD=" + id_etatD +
+				",libelle="+ etat.getLibelle()+
+				'}';
+	}
 }
 

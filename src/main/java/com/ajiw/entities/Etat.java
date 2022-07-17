@@ -22,12 +22,10 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 
 @Entity
 @Table(name = "etat")
 public class Etat {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) 
 	private int id_et;
@@ -46,4 +44,11 @@ public class Etat {
 	    ) 
 		private Collection<EtatDeclaration> etatDeclarations;
 
+
+	@Override
+	public String toString() {
+		return "Etat{" +
+				"id_et=" + id_et +
+				", libelle='" + libelle + '\'' ;
+	}
 }

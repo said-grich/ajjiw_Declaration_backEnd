@@ -10,9 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.SortedSet;
 
 @Service
 public class DeclarationService {
@@ -44,8 +46,15 @@ public class DeclarationService {
            int day = date.getDayOfMonth();
            int mois = date.getMonthValue();
            int ans = date.getYear();
+           int hour=date.getHour();
+           int min=date.getMinute();
+           int sec=date.getSecond();
+
            String datee0 = ans+"-"+mois+"-"+day;
+           String datee01 = ans+"-"+mois+"-"+day+" "+hour+":"+min+":"+sec;
            Date date1=Date.valueOf(datee0);
+           Timestamp date2= Timestamp.valueOf(datee01);
+           System.out.println("------------------------>"+date1);
            declaration.setDateDecl(date1);
            declaration.setUser(user);
           Declaration dec= declarationRepository.save(declaration);
@@ -53,7 +62,7 @@ public class DeclarationService {
            EtatDeclaration etatDeclaration = new EtatDeclaration();
            etatDeclaration.setDeclaration(declaration);
            etatDeclaration.setEtat(etat);
-           etatDeclaration.setDateEtat(date1);
+           etatDeclaration.setDateEtat(date2);
            etatDeclaration.setUser(user);
            etatDeclarationRepository.save(etatDeclaration);
             return Optional.of(dec);
@@ -70,6 +79,7 @@ public class DeclarationService {
             FileDB fileDB = new FileDB(fileName, file.getContentType(), file.getBytes());
             dc_Tmp.setPhoto(fileDB);
             dc_Tmp.setAdresse(declaration.getAdresse());
+            dc_Tmp.setTitle(declaration.getTitle());
             dc_Tmp.setContent(declaration.getContent());
             dc_Tmp.setCateg(declaration.getCateg());
             dc_Tmp.setLatitude(declaration.getLatitude());
@@ -78,8 +88,12 @@ public class DeclarationService {
             int day = date.getDayOfMonth();
             int mois = date.getMonthValue();
             int ans = date.getYear();
+            int hour=date.getHour();
+            int min=date.getMinute();
             String datee0 = ans+"-"+mois+"-"+day;
+            String datee01 = ans+"-"+mois+"-"+day+"-"+hour+"-"+min;
             Date date1=Date.valueOf(datee0);
+            Timestamp date2= Timestamp.valueOf(datee01);
             dc_Tmp.setDateDecl(date1);
             etatDeclarationRepository.deleteEtatDeclarationByDeclarationId(declaration.getId());
             Declaration dec= declarationRepository.save(dc_Tmp);
@@ -87,7 +101,7 @@ public class DeclarationService {
             EtatDeclaration etatDeclaration = new EtatDeclaration();
             etatDeclaration.setDeclaration(declaration);
             etatDeclaration.setEtat(etat);
-            etatDeclaration.setDateEtat(date1);
+            etatDeclaration.setDateEtat(date2);
             etatDeclaration.setUser(dc_Tmp.getUser());
             etatDeclarationRepository.save(etatDeclaration);
 
@@ -108,5 +122,18 @@ public class DeclarationService {
             return -1;
         }
 
+    }
+
+    public List<Declaration> findDeclarationsByUserId(int id) {
+        return declarationRepository.findDeclarationsByUserId(id);
+    }
+
+    public List<EtatDeclaration> findEtatDeclarationsByDeclarationId(Long id) {
+        return etatDeclarationRepository.findEtatDeclarationsByDeclarationId(id);
+    }
+
+    public Declaration findDeclarationById(String id) {
+        Long id1=Long.valueOf(id);
+        return declarationRepository.findDeclarationById(id1);
     }
 }

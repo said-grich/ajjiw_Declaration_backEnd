@@ -23,7 +23,6 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 
 
 @Entity
@@ -105,6 +104,18 @@ public class User {
 	            orphanRemoval = true
 	    )
 		private Collection<Reaction> reactions = new ArrayList<>();
-	
-	
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"email='" + email + '\'' +
+				", active=" + active +
+				", password='" + password + '\'' +
+				", nom='" + nom + '\'' +
+				", prenom='" + prenom + '\'' +
+				", role='" + role + '\'' +
+				", cin='" + cin + '\'' +
+				", telephone='" + telephone + '\'' +
+				'}';
+	}
 }

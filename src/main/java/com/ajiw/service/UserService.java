@@ -40,6 +40,9 @@ public class UserService {
             user.setNom(u.getNom());
             user.setPrenom(u.getPrenom());
             user.setEmail(u.getEmail());
+            user.setCin(u.getCin());
+            user.setTelephone(u.getTelephone());
+            user.setRole(u.getRole());
             user.setPassword(passwordEncoder.encode(u.getPassword()));
             user.setRole(u.getRole());
             return  Optional.of(userRespository.save(user));

@@ -25,15 +25,11 @@ import lombok.ToString;
 @Entity
 @Table(name = "reaction")
 public class Reaction {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)  
-	private int id_react;
-	
+	private int idReact;
 	@Column(name = "date_react") 
-	private Date date_react;
-	
- 
+	private Date dateReact;
 	//=================
 	@ManyToOne
 	@JoinColumn(nullable = false) 
@@ -45,11 +41,17 @@ public class Reaction {
 	@JoinColumn(nullable = false) 
     @JsonBackReference(value="reaction-user")  
 	private User user;
-	
-	//===================
-	@ManyToOne
-	@JoinColumn(nullable = false) 
-    @JsonBackReference(value="reaction-typeReactions")   
-	private TypeReaction typeReactions;
+	private int reaction;
 
+
+	@Override
+	public String toString() {
+		return "Reaction{" +
+				"idReact=" + idReact +
+				", dateReact=" + dateReact +
+				", declaration=" + declaration +
+				", user=" + user.getNom()+" "+user.getPrenom() +
+				", reaction=" + reaction +
+				'}';
+	}
 }

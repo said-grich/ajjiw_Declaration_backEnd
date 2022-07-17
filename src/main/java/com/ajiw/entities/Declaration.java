@@ -19,7 +19,6 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -30,7 +29,7 @@ public class Declaration {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) 
 	private Long id;
-	
+	private String title;
 	@Column(name = "dateDecl")
 	@JsonProperty("dateDecl")
 	private Date dateDecl;
@@ -65,6 +64,7 @@ public class Declaration {
 	private String categ;
 	@ManyToOne
 	@JsonProperty("user")
+	@JsonIgnore
 	@JoinColumn(nullable = false)  
 	private User user;
 
