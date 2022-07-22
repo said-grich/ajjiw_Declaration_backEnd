@@ -20,14 +20,15 @@ public class FileDB {
     @JsonIgnore
     @OneToOne(mappedBy = "photo")
     Declaration declaration;
-    @Lob
-    private byte[] data;
+
+    private String path;
+
     public FileDB() {
     }
-    public FileDB(String name, String type, byte[] data) {
+    public FileDB(String name, String type) {
         this.name = name;
         this.type = type;
-        this.data = data;
+
     }
     public String getId() {
         return id;
@@ -44,10 +45,5 @@ public class FileDB {
     public void setType(String type) {
         this.type = type;
     }
-    public byte[] getData() {
-        return data;
-    }
-    public void setData(byte[] data) {
-        this.data = data;
-    }
+
 }

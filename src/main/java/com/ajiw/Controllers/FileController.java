@@ -22,22 +22,22 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
 public class FileController {
-    @Autowired
-    private FileStorageService storageService;
-
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-       return storageService.uploadFile(file);
-    }
-    @GetMapping("/files")
-    public ResponseEntity<List<ResponseFile>> getListFiles() {
-       return storageService.getListFiles();
-    }
-    @GetMapping("/files/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
-        FileDB fileDB = storageService.getFile(id);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-                .body(fileDB.getData());
-    }
+//    @Autowired
+//    private FileStorageService storageService;
+//
+////    @PostMapping("/upload")
+////    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+////       return storageService.uploadFile(file);
+////    }
+//    @GetMapping("/files")
+//    public ResponseEntity<List<ResponseFile>> getListFiles() {
+//       return storageService.getListFiles();
+//    }
+//    @GetMapping("/files/{id}")
+//    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+//        FileDB fileDB = storageService.getFile(id);
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
+//                .body(fileDB.getData());
+//    }
 }

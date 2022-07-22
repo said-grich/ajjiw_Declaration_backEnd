@@ -8,6 +8,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -28,6 +30,8 @@ public class DeclarationService {
     EtatRepository etatRepository;
     @Autowired
     private FileStorageService fileDBRepository;
+    @Autowired
+    private  PhotoService  photoService;
 
     public List<Declaration> findAll() {
         return declarationRepository.findAll();
@@ -39,7 +43,8 @@ public class DeclarationService {
        if(dc_Tmp==null){
            User user =userRespository.findByEmail(email);
            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-           FileDB fileDB = new FileDB(fileName, file.getContentType(), file.getBytes());
+           FileDB fileDB = new FileDB(fileName, file.getContentType());
+           fileDB=photoService.saveImage(file,fileDB);
            declaration.setPhoto(fileDB);
            System.out.println(fileDB.getName());
            LocalDateTime date = LocalDateTime.now();
@@ -49,7 +54,6 @@ public class DeclarationService {
            int hour=date.getHour();
            int min=date.getMinute();
            int sec=date.getSecond();
-
            String datee0 = ans+"-"+mois+"-"+day;
            String datee01 = ans+"-"+mois+"-"+day+" "+hour+":"+min+":"+sec;
            Date date1=Date.valueOf(datee0);
@@ -76,7 +80,8 @@ public class DeclarationService {
         Declaration dc_Tmp= declarationRepository.findDeclarationById(declaration.getId());
         if(dc_Tmp!=null){
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            FileDB fileDB = new FileDB(fileName, file.getContentType(), file.getBytes());
+            FileDB fileDB = new FileDB(fileName, file.getContentType());
+
             dc_Tmp.setPhoto(fileDB);
             dc_Tmp.setAdresse(declaration.getAdresse());
             dc_Tmp.setTitle(declaration.getTitle());
