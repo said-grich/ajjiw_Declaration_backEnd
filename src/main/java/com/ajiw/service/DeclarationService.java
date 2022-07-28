@@ -27,7 +27,7 @@ public class DeclarationService {
     @Autowired
     EtatRepository etatRepository;
     @Autowired
-    private FileStorageService fileDBRepository;
+    private FileStorageService storageService;
 
     public List<Declaration> findAll() {
         return declarationRepository.findAll();
@@ -38,10 +38,9 @@ public class DeclarationService {
       Declaration dc_Tmp= declarationRepository.findDeclarationById( declaration.getId());
        if(dc_Tmp==null){
            User user =userRespository.findByEmail(email);
-           String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-           FileDB fileDB = new FileDB(fileName, file.getContentType(), file.getBytes());
+           FileDB fileDB = storageService.store(file);
            declaration.setPhoto(fileDB);
-           System.out.println(fileDB.getName());
+           declaration.setPhotoUri("/files/"+fileDB.getId());
            LocalDateTime date = LocalDateTime.now();
            int day = date.getDayOfMonth();
            int mois = date.getMonthValue();
@@ -49,7 +48,6 @@ public class DeclarationService {
            int hour=date.getHour();
            int min=date.getMinute();
            int sec=date.getSecond();
-
            String datee0 = ans+"-"+mois+"-"+day;
            String datee01 = ans+"-"+mois+"-"+day+" "+hour+":"+min+":"+sec;
            Date date1=Date.valueOf(datee0);

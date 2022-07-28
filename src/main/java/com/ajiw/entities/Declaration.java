@@ -19,7 +19,6 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "declaration")
@@ -54,9 +53,9 @@ public class Declaration {
 	@Column(name = "etatD")
 	@JsonProperty("etatD")
 	private String etatD;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JsonProperty("photo")
+	@ToString.Exclude
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private FileDB photo;
 	
 	@Column(name = "categ")
@@ -67,6 +66,7 @@ public class Declaration {
 	@JsonIgnore
 	@JoinColumn(nullable = false)  
 	private User user;
+	private String photoUri;
 
 	/*
 	@ManyToOne
