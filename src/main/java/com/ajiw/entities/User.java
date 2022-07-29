@@ -68,6 +68,7 @@ public class User {
 	@Column(name = "imm")
 	@JsonProperty("imm")
 	private String imm;
+	private Boolean isAdmin;
 	
 	//==================
 			@JsonIgnore

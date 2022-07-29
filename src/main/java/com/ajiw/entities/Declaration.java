@@ -75,7 +75,6 @@ public class Declaration {
 	private Categorie categorie;
     */
 	//===================
-	@JsonIgnore
 	@OneToMany(
             mappedBy = "declaration",
             cascade = CascadeType.ALL,

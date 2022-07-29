@@ -4,19 +4,18 @@ import com.ajiw.Repositories.UserRespository;
 import com.ajiw.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
-public class UserService {
+public class UserFrontService {
     @Autowired
     UserRespository userRespository;
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public Optional<?> login(User u){
         User userT=userRespository.findByEmail(u.getEmail());
-        if(userT!=null){
+
+        if(userT!=null&&userT.getIsAdmin()){
             String encodedPassword=userT.getPassword();
             String password=u.getPassword();
             boolean isPasswordMatch = passwordEncoder.matches(password, encodedPassword);
@@ -36,6 +35,7 @@ public class UserService {
         User userT=userRespository.findByEmail(u.getEmail());
         if(userT==null) {
             User user = new User();
+            user.setIsAdmin(Boolean.TRUE);
             user.setNom(u.getNom());
             user.setPrenom(u.getPrenom());
             user.setEmail(u.getEmail());
@@ -52,7 +52,7 @@ public class UserService {
     }
     public Optional<?> update(User u) {
         User userT=userRespository.findByEmail(u.getEmail());
-        if(userT!=null) {
+        if(userT!=null&&userT.getIsAdmin()) {
             userT.setNom(u.getNom());
             userT.setPrenom(u.getPrenom());
             userT.setEmail(u.getEmail());

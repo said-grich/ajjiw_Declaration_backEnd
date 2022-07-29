@@ -44,6 +44,7 @@ public class EtatDeclaration {
 	@ManyToOne
 	@JoinColumn(nullable = false) 
 	@JsonIgnore
+	@ToString.Exclude
 	private Declaration declaration;
 	
 	//=================
